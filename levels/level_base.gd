@@ -7,8 +7,5 @@ func _enter_tree() -> void:
 func _ready():
 	set_process_active(false);
 
-func _exit_tree() -> void:
-	Controller.set_level(null);
-
 func set_process_active(active: bool) -> void:
 	get_tree().paused = !active;
