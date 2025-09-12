@@ -7,6 +7,8 @@ var direction : Vector2 = Vector2.DOWN;
 @export var change_ai_y : int = 200;
 @export var damage : int = 1;
 
+var max_x_pos : int = 550;
+
 var random = RandomNumberGenerator.new();
 var change_direction_time : float = 0.0;
 
@@ -15,13 +17,15 @@ var follow_player : bool = false;
 func _ready() -> void:
 	if(area):
 		area.connect("area_entered", Callable(self, "on_area_entered"));
+	
+	randomize_direction();
 
 func _process(delta: float) -> void:
 	if(follow_player):
 		var player = Controller.player;
 		if(player):
 			var diff = global_position - player.global_position
-			if(abs(diff.y) > abs(diff.x)):
+			if(abs(diff.x) <= 20.0):
 				direction = Vector2.DOWN;
 			elif(diff.x > 0):
 				direction = Vector2.LEFT;
@@ -40,6 +44,13 @@ func _process(delta: float) -> void:
 			change_direction_time += delta;
 
 	position += direction * speed * delta;
+	if(position.x > max_x_pos):
+		position.x = max_x_pos;
+		direction = Vector2.LEFT;
+	elif(position.x < 0):
+		position.x = 0;
+		direction = Vector2.RIGHT;
+		
 	if(position.y > 700):
 		queue_free();
 
@@ -48,9 +59,9 @@ func randomize_direction() -> void:
 	var new_d = random.randi_range(0, 100);
 	change_direction_time = random.randf_range(0.2, random_timer);
 
-	if(new_d < 25):
+	if(new_d <= 35):
 		direction = Vector2.LEFT;
-	elif(new_d < 50):
+	elif(new_d <= 70):
 		direction = Vector2.RIGHT;
 	else:
 		direction = Vector2.DOWN;

@@ -16,4 +16,8 @@ func set_level(index: int) -> void:
 	current_level_index = index;
 	current_level = levels[current_level_index].instantiate();
 	add_child(current_level);
+	current_level.set_position(Vector2.ZERO);
+	current_level.set_size(self.size);
+	await get_tree().process_frame;
+	current_level.set_ready();
  

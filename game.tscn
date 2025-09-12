@@ -5,20 +5,72 @@
 [ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://time_label.gd" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://b0kp6akyoc1ev" path="res://enemies/enemy_1.tscn" id="4_fc0e3"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Control" node_paths=PackedStringArray("enemies_spawner")]
+physics_interpolation_mode = 0
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_e2o6t")
-metadata/_custom_type_script = "uid://ctor5ssuw0kcc"
+enemies_spawner = NodePath("MarginContainer/VBoxContainer/enemy_spawn")
+enemies_spawner_distance = Vector2(50, 50)
+enemies_scenes = Array[PackedScene]([ExtResource("4_fc0e3")])
+enemies_count = Array[int]([10])
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("3_feb5d")
 
-[node name="midle_pos_player" type="Node2D" parent="."]
-position = Vector2(576, 0)
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
-[node name="Player" parent="midle_pos_player" instance=ExtResource("1_80nbo")]
-position = Vector2(0, 580)
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 
-[node name="Enemy1" parent="." instance=ExtResource("4_fc0e3")]
-position = Vector2(520, 90)
+[node name="enemy_spawn" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer/enemy_spawn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.156863)
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="player_area" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Player" parent="MarginContainer/VBoxContainer/player_area" node_paths=PackedStringArray("player_control_area") instance=ExtResource("1_80nbo")]
+position = Vector2(566, -18)
+player_control_area = NodePath("..")

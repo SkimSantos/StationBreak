@@ -8,7 +8,6 @@ var hp : int = max_hp;
 
 func on_bullet_hit(damage : int) -> void:
     hp -= damage;
-    print("%s hp = %d" % [self.name, hp]);
     if(hp <= 0):
         on_hp_zero();
 
