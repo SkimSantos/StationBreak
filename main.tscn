@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqsywljl35oly"]
+
+[ext_resource type="PackedScene" uid="uid://d72350vvkgup" path="res://game.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cwykn0ie1yh3p" path="res://input_manager.gd" id="2_0xm2m"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="input" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("2_0xm2m")
