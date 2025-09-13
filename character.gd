@@ -1,6 +1,11 @@
 extends Node2D
 class_name Character
+enum eType {
+	PLAYER,
+	ENEMY
+}
 
+@export var type : eType = eType.ENEMY;
 @export_category("Base")
 @export var max_hp : int = 1;
 var hp : int = max_hp;

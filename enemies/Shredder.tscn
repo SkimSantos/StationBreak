@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6gci22787o15"]
+
+[ext_resource type="Script" uid="uid://cl4bas7mo41bf" path="res://enemies/shredder.gd" id="1_vrtcy"]
+[ext_resource type="PackedScene" uid="uid://b14g4bya8vr04" path="res://player/bullet.tscn" id="2_q8rwf"]
+[ext_resource type="Texture2D" uid="uid://7hqi3x13og7i" path="res://icon.svg" id="3_nuhe6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rlllf"]
+size = Vector2(30, 30)
+
+[node name="Shredder" type="Node2D" node_paths=PackedStringArray("nuzzle")]
+script = ExtResource("1_vrtcy")
+bullet_scene = ExtResource("2_q8rwf")
+shoot_interval = 1.0
+number_bullet_pre_instance = 4
+nuzzle = NodePath("nuzzle")
+speed_x = 80.0
+metadata/_custom_type_script = "uid://b0rchy2otdgnt"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.415686, 0.615686, 0.505882, 1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_nuhe6")
+
+[node name="Area2D" type="Area2D" parent="."]
+disable_mode = 2
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_rlllf")
+
+[node name="nuzzle" type="Node2D" parent="."]
+position = Vector2(0, 32)

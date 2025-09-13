@@ -14,9 +14,28 @@ var firing : bool = false;
 @export_subgroup("Parts")
 @export var nuzzle : Node2D;
 @export var bullet_scene : PackedScene;
+@export var instantiate_bullets : int = 10;
+var bullet_array : Array[Bullet] = [];
+var fired_bullets : Array[Bullet] = [];
 
 func _enter_tree() -> void:
 	Controller.set_player(self);
+
+func initiate_bullets() -> void:
+	if(bullet_scene != null):
+		for i in range(0, instantiate_bullets):
+			var bullet = bullet_scene.instantiate() as Bullet;
+			if(bullet == null):
+				print("Bullet is null");
+				return;
+			bullet.name = "%s_Bullet_%d" % [self.name, i];
+			bullet.bullet_type = type;
+			bullet.visible = false;
+			bullet.delete_callable = Callable(self, "on_bullet_deleted");
+			bullet.set_process(false);
+			bullet.initiate_bullet();
+			Controller.level.add_child(bullet);
+			bullet_array.append(bullet);
 
 func _process(delta: float) -> void:
 	if(position.x > player_control_area.size.x):
@@ -43,11 +62,35 @@ func set_fire(active : bool) -> void:
 	firing = active;
 
 func fire_bullet() -> void:
-	var bullet = bullet_scene.instantiate();
-	bullet.global_position = nuzzle.global_position;
-	Controller.level.add_child(bullet);
-	bullet.set_direction(Vector2.UP);
+	if(bullet_array.size() > 0):
+		var bullet = bullet_array.pop_front() as Bullet;
+		fired_bullets.append(bullet);
+		if(bullet == null):
+			print("Bullet is null on fire player");
+			return;
+		bullet.global_position = nuzzle.global_position;
+		bullet.set_direction(Vector2.UP);
+		bullet.visible = true;
+		bullet.set_process(true);
+		bullet.fired();
+	else:
+		var bullet = bullet_scene.instantiate();
+		bullet.bullet_type = type;
+		fired_bullets.append(bullet);
+		bullet.global_position = nuzzle.global_position;
+		Controller.level.add_child(bullet);
+		bullet.set_direction(Vector2.UP);
+		bullet.fired();
 
 func on_hp_zero() -> void:
+	for bullet in bullet_array:
+		bullet.queue_free();
+	for bullet in fired_bullets:
+		bullet.queue_free();
 	Controller.input_manager.input_level_active = false;
+	Controller.main_scene.set_label_text("You Died!");
 	queue_free();
+
+func on_bullet_deleted(bullet: Bullet) -> void:
+	fired_bullets.erase(bullet);
+	bullet_array.append(bullet);

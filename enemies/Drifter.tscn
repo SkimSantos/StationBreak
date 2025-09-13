@@ -1,20 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://b0kp6akyoc1ev"]
 
-[ext_resource type="Script" uid="uid://bya5jnapnej3j" path="res://enemies/enemy_base.gd" id="1_df7aa"]
-[ext_resource type="Texture2D" uid="uid://7hqi3x13og7i" path="res://icon.svg" id="2_df7aa"]
+[ext_resource type="Script" uid="uid://bya5jnapnej3j" path="res://enemies/enemy_base.gd" id="1_1ooce"]
+[ext_resource type="Texture2D" uid="uid://7hqi3x13og7i" path="res://icon.svg" id="2_vo1br"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rlllf"]
-size = Vector2(60, 60)
+size = Vector2(30, 30)
 
-[node name="Enemy1" type="Node2D" node_paths=PackedStringArray("area")]
-script = ExtResource("1_df7aa")
+[node name="Drifter" type="Node2D" node_paths=PackedStringArray("area")]
+script = ExtResource("1_1ooce")
 area = NodePath("Area2D")
 metadata/_custom_type_script = "uid://b0rchy2otdgnt"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.407876, 0.333112, 1)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_df7aa")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_vo1br")
 
 [node name="Area2D" type="Area2D" parent="."]
 disable_mode = 2

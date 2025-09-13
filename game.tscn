@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d72350vvkgup"]
+[gd_scene load_steps=7 format=3 uid="uid://d72350vvkgup"]
 
 [ext_resource type="PackedScene" uid="uid://c1svl4usmmaia" path="res://player/player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://ctor5ssuw0kcc" path="res://levels/level_base.gd" id="1_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://e5eyfu0jjw2u" path="res://enemies/Rustfang.tscn" id="3_7jktm"]
 [ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://time_label.gd" id="3_feb5d"]
-[ext_resource type="PackedScene" uid="uid://b0kp6akyoc1ev" path="res://enemies/enemy_1.tscn" id="4_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://b0kp6akyoc1ev" path="res://enemies/Drifter.tscn" id="4_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://b6gci22787o15" path="res://enemies/Shredder.tscn" id="4_ryrav"]
 
 [node name="Game" type="Control" node_paths=PackedStringArray("enemies_spawner")]
 physics_interpolation_mode = 0
@@ -20,8 +22,8 @@ grow_vertical = 2
 script = ExtResource("1_e2o6t")
 enemies_spawner = NodePath("MarginContainer/VBoxContainer/enemy_spawn")
 enemies_spawner_distance = Vector2(50, 50)
-enemies_scenes = Array[PackedScene]([ExtResource("4_fc0e3")])
-enemies_count = Array[int]([10])
+enemies_scenes = Array[PackedScene]([ExtResource("4_fc0e3"), ExtResource("3_7jktm"), ExtResource("4_ryrav")])
+enemies_count = Array[int]([10, 2, 2])
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0

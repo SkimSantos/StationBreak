@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d72350vvkgup" path="res://game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cwykn0ie1yh3p" path="res://input_manager.gd" id="2_0xm2m"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" node_paths=PackedStringArray("temp_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h2yge")
 levels = Array[PackedScene]([ExtResource("1_ig7tw")])
+temp_label = NodePath("final_label_temp")
 
 [node name="input" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("2_0xm2m")
+
+[node name="final_label_temp" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "You Lost"
+horizontal_alignment = 1
+vertical_alignment = 1

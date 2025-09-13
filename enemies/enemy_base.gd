@@ -2,7 +2,8 @@ extends Character
 class_name EnemyBase
 
 var direction : Vector2 = Vector2.DOWN;
-@export var speed : float = 100.0;
+@export_range(50, 200, 1) var speed_x : float = 150.0;
+@export_range(50, 200, 1) var speed_y : float = 100.0;
 @export var random_timer : float = 1.0;
 @export var change_ai_y : int = 200;
 @export var damage : int = 1;
@@ -14,7 +15,7 @@ var change_direction_time : float = 0.0;
 
 var follow_player : bool = false;
 
-func _ready() -> void:
+func set_ready() -> void:
 	if(area):
 		area.connect("area_entered", Callable(self, "on_area_entered"));
 	
@@ -43,7 +44,14 @@ func _process(delta: float) -> void:
 		else:
 			change_direction_time += delta;
 
-	position += direction * speed * delta;
+	var dir = direction * delta;
+	if(direction.x == 0.0):
+		dir *= speed_y;
+	else:
+		dir *= speed_x;
+
+	position += dir;
+
 	if(position.x > max_x_pos):
 		position.x = max_x_pos;
 		direction = Vector2.LEFT;
@@ -70,4 +78,7 @@ func on_area_entered(a: Node) -> void:
 	if a.get_parent() is PlayerController:
 		var player = a.get_parent() as PlayerController;
 		player.on_bullet_hit(damage);
-		queue_free();
+		Controller.level.enemy_killed(self);
+
+func on_hp_zero() -> void:
+	Controller.level.enemy_killed(self);;

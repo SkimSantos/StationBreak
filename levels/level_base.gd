@@ -8,6 +8,8 @@ var enemies_positions : Array[int] = [];
 @export var enemies_scenes : Array[PackedScene];
 @export var enemies_count : Array[int];
 
+var spawned_enemies : Array[EnemyBase] = [];
+
 var random = RandomNumberGenerator.new();
 
 func _enter_tree() -> void:
@@ -21,6 +23,9 @@ func set_ready():
 	var y_int : int  = int(enemies_spawner.size.y / enemies_spawner_distance.y);
 	enemies_positions.resize(y_int * x_int);
 	spawn_enemies();
+	if(Controller.player != null):
+		Controller.player.initiate_bullets();
+		Controller.player.set_fire(true);
 
 func set_process_active(active: bool) -> void:
 	get_tree().paused = !active;
@@ -34,6 +39,8 @@ func spawn_enemies() -> void:
 			enemies_spawner.add_child(enemy);
 			enemy.position = enemies_spawner.position + pos;
 			enemy.max_x_pos = enemies_spawner.size.x;
+			spawned_enemies.append(enemy);
+			enemy.set_ready();
 
 func get_random_position() -> Vector2:
 	random.randomize();
@@ -48,9 +55,6 @@ func get_random_position() -> Vector2:
 
 	var int_x : int = int(enemies_spawner.size.x / enemies_spawner_distance.x);
 	var int_y : int  = enemies_positions.size() / int_x;
-
-	print("pos_index = %d" % pos_index);
-	print("int_x %d, int_y %s" % [pos_index / int_y, pos_index / int_x]);
 	
 	pos.x = (enemies_spawner_distance.x * int(pos_index / int_y));
 	pos.y = (int(pos_index / int_x) * enemies_spawner_distance.y);
@@ -58,3 +62,11 @@ func get_random_position() -> Vector2:
 	enemies_positions[pos_index] = 1;
 
 	return pos;
+
+func enemy_killed(enemy: EnemyBase) -> void:
+	spawned_enemies.erase(enemy);
+	enemy.queue_free();
+	if(spawned_enemies.size() == 0):
+		Controller.player.set_fire(false);
+		Controller.main_scene.set_label_text("Level Complete!");
+		print("Completed");

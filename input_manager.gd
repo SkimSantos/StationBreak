@@ -35,10 +35,10 @@ func _input(event: InputEvent) -> void:
 				Controller.player.set_direction(Vector2.LEFT);
 		
 		# Fire
-		if(event.is_action_pressed("fire")):
-			Controller.player.set_fire(true);
-		elif(event.is_action_released("fire")):
-			Controller.player.set_fire(false);
+		# if(event.is_action_pressed("fire")):
+		# 	Controller.player.set_fire(true);
+		# elif(event.is_action_released("fire")):
+		# 	Controller.player.set_fire(false);
 
 	# Debug
 	if(event.is_action_pressed("reset_level")):
