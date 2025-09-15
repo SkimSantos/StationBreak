@@ -1,6 +1,8 @@
 extends Character
 class_name PlayerController
 
+@export var player_sprite : Sprite2D;
+
 @export_subgroup("Stats")
 @export_range(50, 250, 5) var speed : float = 100.0;
 var direction : Vector2 = Vector2.ZERO;
@@ -41,9 +43,11 @@ func _process(delta: float) -> void:
 	if(position.x > player_control_area.size.x):
 		position.x = player_control_area.size.x;
 		direction = Vector2.ZERO;
+		player_sprite.frame = 1;
 	elif (position.x < 0):
 		position.x = 0;
 		direction = Vector2.ZERO;
+		player_sprite.frame = 1;
 	else:
 		position += direction * speed * delta;
 
@@ -57,6 +61,12 @@ func _process(delta: float) -> void:
 
 func set_direction(dir: Vector2) -> void:
 	direction = dir;
+	if(direction == Vector2.LEFT):
+		player_sprite.frame = 2;
+	elif(direction == Vector2.RIGHT):
+		player_sprite.frame = 0;
+	else:
+		player_sprite.frame = 1;
 
 func set_fire(active : bool) -> void:
 	firing = active;

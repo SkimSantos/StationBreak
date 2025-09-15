@@ -68,5 +68,4 @@ func enemy_killed(enemy: EnemyBase) -> void:
 	enemy.queue_free();
 	if(spawned_enemies.size() == 0):
 		Controller.player.set_fire(false);
-		Controller.main_scene.set_label_text("Level Complete!");
-		print("Completed");
+		Controller.main_scene.completed_level();

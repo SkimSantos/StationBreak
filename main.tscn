@@ -1,10 +1,135 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqsywljl35oly"]
+[gd_scene load_steps=11 format=3 uid="uid://bqsywljl35oly"]
 
 [ext_resource type="Script" uid="uid://bltvgumiyoril" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://d72350vvkgup" path="res://game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cwykn0ie1yh3p" path="res://input_manager.gd" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://b3atpynd10wvl" path="res://assets/stars_back_1.png" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://dgxbw8d06bcvd" path="res://ui.gd" id="4_1bvp3"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("temp_label")]
+[sub_resource type="Animation" id="Animation_h2yge"]
+resource_name = "next_level"
+length = 5.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui/final_label_temp:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": ["Next Level in 5", "Next Level in 4", "Next Level in 3", "Next Level in 2", "Next Level in 1", "Next Level in 0"]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0],
+"method": &"set_level"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ui/final_label_temp:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 5.16, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_1bvp3"]
+resource_name = "start_game"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui/Main_menu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_game"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lquwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui/Main_menu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui/final_label_temp:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7mycd"]
+resource_name = "init"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui/Main_menu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1bvp3"]
+_data = {
+&"RESET": SubResource("Animation_lquwl"),
+&"init": SubResource("Animation_7mycd"),
+&"next_level": SubResource("Animation_h2yge"),
+&"start_game": SubResource("Animation_1bvp3")
+}
+
+[node name="Main" type="Control" node_paths=PackedStringArray("game_control", "animator", "temp_label", "background_control", "star_controller", "temp_star_sprite")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,13 +138,61 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h2yge")
 levels = Array[PackedScene]([ExtResource("1_ig7tw")])
-temp_label = NodePath("final_label_temp")
+game_control = NodePath("game_control")
+animator = NodePath("main_animator")
+temp_label = NodePath("ui/final_label_temp")
+background_control = NodePath("background")
+star_controller = NodePath("background/star_control")
+background_scroll_speed = 5.0
+star_grid_space = 50
+temp_star_sprite = NodePath("background/star_control/Sprite2D")
+
+[node name="background" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="star_control" type="Node2D" parent="background"]
+
+[node name="Sprite2D" type="Sprite2D" parent="background/star_control"]
+scale = Vector2(2, 2)
+texture = ExtResource("3_lquwl")
+hframes = 3
+vframes = 3
+
+[node name="game_control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="input" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("2_0xm2m")
 
-[node name="final_label_temp" type="Label" parent="."]
+[node name="main_animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1bvp3")
+}
+
+[node name="ui" type="Control" parent="." node_paths=PackedStringArray("pause_menu")]
+z_index = 50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_1bvp3")
+pause_menu = NodePath("pause_menu")
+
+[node name="final_label_temp" type="Label" parent="ui"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +200,123 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 26
-text = "You Lost"
+text = "Next Level in 5"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Main_menu" type="Control" parent="ui"]
+process_mode = 3
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/Main_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSeparator" type="VSeparator" parent="ui/Main_menu/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/Main_menu/HBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="start" type="Button" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="quit" type="Button" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="HSeparator" type="HSeparator" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSeparator2" type="VSeparator" parent="ui/Main_menu/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="pause_menu" type="Control" parent="ui"]
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ui/pause_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0196078, 0.0196078, 0.0196078, 0.392157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/pause_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSeparator" type="VSeparator" parent="ui/pause_menu/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/pause_menu/HBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="ui/pause_menu/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="continue" type="Button" parent="ui/pause_menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="restart" type="Button" parent="ui/pause_menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reset"
+
+[node name="quit" type="Button" parent="ui/pause_menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="HSeparator" type="HSeparator" parent="ui/pause_menu/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSeparator2" type="VSeparator" parent="ui/pause_menu/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="ui/Main_menu/HBoxContainer/VBoxContainer/start" to="main_animator" method="play" binds= [&"start_game"]]
+[connection signal="pressed" from="ui/Main_menu/HBoxContainer/VBoxContainer/quit" to="." method="quit_game"]
+[connection signal="pressed" from="ui/pause_menu/HBoxContainer/VBoxContainer/continue" to="ui" method="toggle_pause"]
+[connection signal="pressed" from="ui/pause_menu/HBoxContainer/VBoxContainer/restart" to="." method="reset_level"]
+[connection signal="pressed" from="ui/pause_menu/HBoxContainer/VBoxContainer/quit" to="." method="to_main_menu"]
