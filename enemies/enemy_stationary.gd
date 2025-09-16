@@ -5,6 +5,7 @@ class_name Rustfang
 @export var shoot_interval : float = 2.0;
 @export var number_bullet_pre_instance : int = 10;
 @export var nuzzle : Node2D;
+@export var animator : AnimationPlayer;
 
 var bullet_array : Array[Bullet] = [];
 var fired_bullets : Array[Bullet] = [];
@@ -19,6 +20,7 @@ func set_ready() -> void:
 				return;
 			bullet.name = "%s_Bullet_%d" % [self.name, i];
 			bullet.bullet_type = type;
+			bullet.get_node("Sprite2D").flip_v = true;
 			bullet.visible = false;
 			bullet.delete_callable = Callable(self, "on_bullet_deleted");
 			bullet.set_process(false);
@@ -32,7 +34,10 @@ func set_ready() -> void:
 func _process(delta: float) -> void:
 	if(shoot_time >= shoot_interval):
 		shoot_time = 0.0;
-		fire_bullet();
+		if(animator != null):
+			animator.play("shoot");
+		else:
+			fire_bullet();
 	else:
 		shoot_time += delta;
 

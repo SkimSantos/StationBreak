@@ -2,6 +2,8 @@ extends Character
 class_name PlayerController
 
 @export var player_sprite : Sprite2D;
+@export var animation_frame_rate : float = 0.2;
+var animation_timer : float = 0.0;
 
 @export_subgroup("Stats")
 @export_range(50, 250, 5) var speed : float = 100.0;
@@ -40,14 +42,22 @@ func initiate_bullets() -> void:
 			bullet_array.append(bullet);
 
 func _process(delta: float) -> void:
+	animation_timer += delta;
+	if(animation_timer >= animation_frame_rate):
+		animation_timer = 0.0;
+		if(player_sprite.frame_coords.x >= player_sprite.hframes -1):
+			player_sprite.frame_coords.x = 0;
+		else:
+			player_sprite.frame_coords.x += 1;
+
 	if(position.x > player_control_area.size.x):
 		position.x = player_control_area.size.x;
 		direction = Vector2.ZERO;
-		player_sprite.frame = 1;
+		player_sprite.frame_coords.y = 0;
 	elif (position.x < 0):
 		position.x = 0;
 		direction = Vector2.ZERO;
-		player_sprite.frame = 1;
+		player_sprite.frame_coords.y = 0;
 	else:
 		position += direction * speed * delta;
 
@@ -62,11 +72,11 @@ func _process(delta: float) -> void:
 func set_direction(dir: Vector2) -> void:
 	direction = dir;
 	if(direction == Vector2.LEFT):
-		player_sprite.frame = 2;
+		player_sprite.frame_coords.y = 1;
 	elif(direction == Vector2.RIGHT):
-		player_sprite.frame = 0;
+		player_sprite.frame_coords.y = 2;
 	else:
-		player_sprite.frame = 1;
+		player_sprite.frame_coords.y = 0;
 
 func set_fire(active : bool) -> void:
 	firing = active;

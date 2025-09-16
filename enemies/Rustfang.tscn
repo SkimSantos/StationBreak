@@ -1,31 +1,89 @@
-[gd_scene load_steps=5 format=3 uid="uid://e5eyfu0jjw2u"]
+[gd_scene load_steps=8 format=3 uid="uid://e5eyfu0jjw2u"]
 
 [ext_resource type="Script" uid="uid://46nyyp688vra" path="res://enemies/enemy_stationary.gd" id="1_fs0r5"]
 [ext_resource type="PackedScene" uid="uid://b14g4bya8vr04" path="res://player/bullet.tscn" id="2_8ebfi"]
-[ext_resource type="Texture2D" uid="uid://7hqi3x13og7i" path="res://icon.svg" id="3_jkbfu"]
+[ext_resource type="Texture2D" uid="uid://cbno4b26yd7ea" path="res://assets/rustfang.png" id="3_fs0r5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rlllf"]
-size = Vector2(30, 30)
+size = Vector2(32, 17)
 
-[node name="Rustfang" type="Node2D" node_paths=PackedStringArray("nuzzle")]
+[sub_resource type="Animation" id="Animation_fs0r5"]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire_bullet"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_8ebfi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ebfi"]
+_data = {
+&"RESET": SubResource("Animation_8ebfi"),
+&"shoot": SubResource("Animation_fs0r5")
+}
+
+[node name="Rustfang" type="Node2D" node_paths=PackedStringArray("nuzzle", "animator")]
 script = ExtResource("1_fs0r5")
 bullet_scene = ExtResource("2_8ebfi")
-shoot_interval = 1.0
+shoot_interval = 0.7
 number_bullet_pre_instance = 4
 nuzzle = NodePath("nuzzle")
+animator = NodePath("animator")
 metadata/_custom_type_script = "uid://b0rchy2otdgnt"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.809441, 0.448876, 0.938419, 1)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_jkbfu")
+scale = Vector2(2, 2)
+texture = ExtResource("3_fs0r5")
+hframes = 4
 
 [node name="Area2D" type="Area2D" parent="."]
 disable_mode = 2
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_rlllf")
 
 [node name="nuzzle" type="Node2D" parent="."]
-position = Vector2(0, 32)
+position = Vector2(0, 3)
+
+[node name="animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8ebfi")
+}
