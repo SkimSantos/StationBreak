@@ -112,7 +112,7 @@ func rearrange_bottom_row() -> void:
 	
 
 func start_game() -> void:
-	set_level(0);
+	set_level(current_level_index);
 
 func reset_level() -> void:
 	if(Controller.ui.pause_menu.visible):

@@ -25,6 +25,11 @@ var fired_bullets : Array[Bullet] = [];
 func _enter_tree() -> void:
 	Controller.set_player(self);
 
+func _ready() -> void:
+	if(player_control_area != null):
+		player_control_area.visible = true;
+		self.position.x = player_control_area.size.x;
+
 func initiate_bullets() -> void:
 	if(bullet_scene != null):
 		for i in range(0, instantiate_bullets):

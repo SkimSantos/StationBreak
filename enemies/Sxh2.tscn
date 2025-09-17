@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck7xkmw3ub5f7"]
+
+[ext_resource type="Script" uid="uid://dwkeublhh8ma0" path="res://enemies/Sxh2.gd" id="1_3daup"]
+[ext_resource type="PackedScene" uid="uid://b14g4bya8vr04" path="res://player/bullet.tscn" id="2_rsxit"]
+[ext_resource type="Texture2D" uid="uid://bhmewbtxrn5t8" path="res://assets/shredder.png" id="3_5ernn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rlllf"]
+size = Vector2(34, 20)
+
+[node name="Sxh2" type="Node2D" node_paths=PackedStringArray("nuzzle", "sprite")]
+script = ExtResource("1_3daup")
+bullet_scene = ExtResource("2_rsxit")
+shoot_interval = 1.0
+number_bullet_pre_instance = 4
+nuzzle = NodePath("nuzzle")
+sprite = NodePath("Sprite2D")
+metadata/_custom_type_script = "uid://dwkeublhh8ma0"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("3_5ernn")
+hframes = 3
+vframes = 3
+
+[node name="Area2D" type="Area2D" parent="."]
+disable_mode = 2
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_rlllf")
+
+[node name="nuzzle" type="Node2D" parent="."]
+position = Vector2(0, 32)

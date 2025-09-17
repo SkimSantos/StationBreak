@@ -1,10 +1,54 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqsywljl35oly"]
+[gd_scene load_steps=12 format=3 uid="uid://bqsywljl35oly"]
 
 [ext_resource type="Script" uid="uid://bltvgumiyoril" path="res://main.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://d72350vvkgup" path="res://game.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cwykn0ie1yh3p" path="res://input_manager.gd" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bgoculym13x1h" path="res://levels/level_0.tscn" id="2_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cqbapm365urkr" path="res://levels/level_1.tscn" id="3_272bh"]
 [ext_resource type="Texture2D" uid="uid://b3atpynd10wvl" path="res://assets/stars_back_1.png" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://dgxbw8d06bcvd" path="res://ui.gd" id="4_1bvp3"]
+
+[sub_resource type="Animation" id="Animation_lquwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui/Main_menu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui/final_label_temp:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7mycd"]
+resource_name = "init"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui/Main_menu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_h2yge"]
 resource_name = "next_level"
@@ -31,8 +75,8 @@ tracks/1/keys = {
 "times": PackedFloat32Array(5.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [0],
-"method": &"set_level"
+"args": [],
+"method": &"start_game"
 }]
 }
 tracks/2/type = "value"
@@ -78,49 +122,6 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_lquwl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ui/Main_menu:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ui/final_label_temp:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_7mycd"]
-resource_name = "init"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ui/Main_menu:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1bvp3"]
 _data = {
 &"RESET": SubResource("Animation_lquwl"),
@@ -137,7 +138,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h2yge")
-levels = Array[PackedScene]([ExtResource("1_ig7tw")])
+levels = Array[PackedScene]([ExtResource("2_7mycd"), ExtResource("3_272bh")])
 game_control = NodePath("game_control")
 animator = NodePath("main_animator")
 temp_label = NodePath("ui/final_label_temp")
