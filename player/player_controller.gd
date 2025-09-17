@@ -25,10 +25,10 @@ var fired_bullets : Array[Bullet] = [];
 func _enter_tree() -> void:
 	Controller.set_player(self);
 
-func _ready() -> void:
+func set_middle_position() -> void:
 	if(player_control_area != null):
 		player_control_area.visible = true;
-		self.position.x = player_control_area.size.x;
+		self.position.x = player_control_area.size.x / 2;
 
 func initiate_bullets() -> void:
 	if(bullet_scene != null):
@@ -113,7 +113,13 @@ func on_hp_zero() -> void:
 	for bullet in fired_bullets:
 		bullet.queue_free();
 	Controller.input_manager.input_level_active = false;
+	Controller.main_scene.on_player_dead();
 	Controller.main_scene.set_label_text("You Died!");
+	if(Controller.main_scene != null && Controller.main_scene.explosion != null):
+		var explosion_instance = Controller.main_scene.explosion.instantiate();
+		if(explosion_instance != null):
+			explosion_instance.global_position = self.global_position;
+			Controller.level.add_child(explosion_instance);
 	queue_free();
 
 func on_bullet_deleted(bullet: Bullet) -> void:

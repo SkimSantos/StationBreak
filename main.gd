@@ -17,12 +17,20 @@ var current_level : LevelBase = null;
 @export var temp_star_sprite : Sprite2D;
 @export var star_percent : int = 30;
 
+@export_subgroup("Effects")
+@export var explosion : PackedScene;
+
 var stars_array : Array[Array] = [];
 var back_distance_runned : float = 0.0;
 var random = RandomNumberGenerator.new();
 
+var endless_on_last : bool = false;
+var endless_count : int = 0;
+
 func _ready() -> void:
 	Controller.set_main_scene(self);
+	endless_on_last = false;
+	endless_count = 0;
 	if(animator):
 		animator.play("init");
 	_create_stars();
@@ -123,10 +131,16 @@ func reset_level() -> void:
 func quit_game() -> void:
 	get_tree().quit();
 
+func on_player_dead() -> void:
+	if(animator):
+		animator.play("game_over");
+
 func to_main_menu() -> void:
 	current_level.queue_free();
 	current_level = null;
 	current_level_index = 0;
+	endless_on_last = false;
+	endless_count = 0;
 	Controller.input_manager.input_level_active = false;
 	get_tree().paused = false;
 	Controller.ui.toggle_pause();
@@ -139,6 +153,9 @@ func set_level(index: int) -> void:
 	
 	current_level_index = index;
 	current_level = levels[current_level_index].instantiate();
+	if(endless_on_last):
+		for i in range(current_level.enemies_count.size()):
+			current_level.enemies_count[i] += random.randi_range(0, 2 * endless_count);
 	game_control.add_child(current_level);
 	current_level.set_position(Vector2.ZERO);
 	current_level.set_size(game_control.size);
@@ -157,6 +174,8 @@ func set_label_text(text: String) -> void:
 func completed_level() -> void:
 	current_level_index += 1;
 	if(current_level_index >= levels.size()):
+		endless_count += 1;
+		endless_on_last = true;
 		current_level_index = levels.size() - 1;
 	Controller.ui.ignore_input = true;
 	animator.play("next_level");

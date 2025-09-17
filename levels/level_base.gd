@@ -26,9 +26,14 @@ func set_ready():
 	if(Controller.player != null):
 		Controller.player.initiate_bullets();
 		Controller.player.set_fire(true);
+		Controller.player.set_middle_position();
+	set_process_active(false);
 
 func set_process_active(active: bool) -> void:
-	get_tree().paused = !active;
+	if(spawned_enemies.size() != 0):
+		get_tree().paused = !active;
+	else:
+		get_tree().paused = false;
 
 func spawn_enemies() -> void:
 	random.randomize();
@@ -48,7 +53,7 @@ func get_random_position() -> Vector2:
 		return Vector2.ZERO;
 
 	var pos_index = random.randi_range(0, enemies_positions.size() - 1);
-	if(enemies_positions[pos_index] == 1):
+	if(enemies_positions[pos_index] == 1 && enemies_positions.size() > spawned_enemies.size()):
 		return get_random_position();
 
 	var pos : Vector2 = Vector2.ZERO;
@@ -64,6 +69,13 @@ func get_random_position() -> Vector2:
 	return pos;
 
 func enemy_killed(enemy: EnemyBase) -> void:
+	if(Controller.main_scene != null && Controller.main_scene.explosion != null):
+		var explosion_instance : AnimatedSprite2D = Controller.main_scene.explosion.instantiate() as AnimatedSprite2D;
+		if(explosion_instance != null):
+			explosion_instance.flip_h = random.randi_range(0, 1) == 1;
+			explosion_instance.flip_v = random.randi_range(0, 1) == 1;
+			explosion_instance.global_position = enemy.global_position;
+			Controller.level.add_child(explosion_instance);
 	spawned_enemies.erase(enemy);
 	enemy.queue_free();
 	if(spawned_enemies.size() == 0):

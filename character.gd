@@ -12,9 +12,14 @@ var hp : int = max_hp;
 @export var area : Area2D;
 
 func on_bullet_hit(damage : int) -> void:
-    hp -= damage;
-    if(hp <= 0):
-        on_hp_zero();
+	hp -= damage;
+	if(hp <= 0):
+		on_hp_zero();
 
 func on_hp_zero() -> void:
-    queue_free();
+	if(Controller.main_scene != null && Controller.main_scene.explosion != null):
+		var explosion_instance = Controller.main_scene.explosion.instantiate();
+		if(explosion_instance != null):
+			explosion_instance.global_position = self.global_position;
+			Controller.level.add_child(explosion_instance);
+	queue_free();
