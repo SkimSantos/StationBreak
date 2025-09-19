@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctor5ssuw0kcc" path="res://levels/level_base.gd" id="1_kx6l7"]
 [ext_resource type="PackedScene" uid="uid://b0kp6akyoc1ev" path="res://enemies/Drifter.tscn" id="2_n46q3"]
-[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://time_label.gd" id="3_btoec"]
+[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://other/time_label.gd" id="3_btoec"]
 [ext_resource type="PackedScene" uid="uid://b6gci22787o15" path="res://enemies/Shredder.tscn" id="3_n46q3"]
 [ext_resource type="PackedScene" uid="uid://c1svl4usmmaia" path="res://player/player.tscn" id="4_gwceb"]
 

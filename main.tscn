@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bqsywljl35oly"]
+[gd_scene load_steps=17 format=3 uid="uid://bqsywljl35oly"]
 
 [ext_resource type="Script" uid="uid://bltvgumiyoril" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://cwykn0ie1yh3p" path="res://input_manager.gd" id="2_0xm2m"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cqbapm365urkr" path="res://levels/level_1.tscn" id="3_272bh"]
 [ext_resource type="Texture2D" uid="uid://b3atpynd10wvl" path="res://assets/stars_back_1.png" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://dgxbw8d06bcvd" path="res://ui.gd" id="4_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://dj4yhjwnbso52" path="res://explosion_1.tscn" id="4_272bh"]
+[ext_resource type="PackedScene" uid="uid://dj4yhjwnbso52" path="res://other/explosion_1.tscn" id="4_272bh"]
+[ext_resource type="PackedScene" uid="uid://bm3poiwtwrb2u" path="res://other/bullet_impact.tscn" id="5_5vw27"]
+[ext_resource type="Texture2D" uid="uid://mqlsvrw75cy" path="res://assets/station_1.png" id="7_kek77"]
 
 [sub_resource type="Animation" id="Animation_lquwl"]
 length = 0.001
@@ -34,6 +36,60 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ui/fade:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0196078, 0.0196078, 0.0196078, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("main_menu_background:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_272bh"]
+resource_name = "game_over"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"to_main_menu"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui/final_label_temp:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_7mycd"]
 resource_name = "init"
@@ -49,6 +105,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui/fade:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0196078, 0.0196078, 0.0196078, 1), Color(0.0196078, 0.0196078, 0.0196078, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("main_menu_background:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
 }
 
 [sub_resource type="Animation" id="Animation_h2yge"]
@@ -92,6 +172,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true, true, false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ui/fade:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3, 5, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.0196078, 0.0196078, 0.0196078, 0), Color(0.0196078, 0.0196078, 0.0196078, 0), Color(0.0196078, 0.0196078, 0.0196078, 1), Color(0.0196078, 0.0196078, 0.0196078, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_1bvp3"]
 resource_name = "start_game"
@@ -122,35 +214,57 @@ tracks/1/keys = {
 "method": &"start_game"
 }]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ui/fade:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.45, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.0196078, 0.0196078, 0.0196078, 0), Color(0.0196078, 0.0196078, 0.0196078, 1), Color(0.0196078, 0.0196078, 0.0196078, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("main_menu_background:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.45, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
 
-[sub_resource type="Animation" id="Animation_272bh"]
-resource_name = "game_over"
-length = 3.0
-tracks/0/type = "method"
+[sub_resource type="Animation" id="Animation_kek77"]
+resource_name = "show_level"
+length = 0.5
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath("ui/fade:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"to_main_menu"
-}]
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0196078, 0.0196078, 0.0196078, 1), Color(0.0196078, 0.0196078, 0.0196078, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("ui/final_label_temp:visible")
+tracks/1/path = NodePath("main_menu_background:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, true, false]
+"values": [false, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1bvp3"]
@@ -159,6 +273,7 @@ _data = {
 &"game_over": SubResource("Animation_272bh"),
 &"init": SubResource("Animation_7mycd"),
 &"next_level": SubResource("Animation_h2yge"),
+&"show_level": SubResource("Animation_kek77"),
 &"start_game": SubResource("Animation_1bvp3")
 }
 
@@ -180,8 +295,10 @@ background_scroll_speed = 5.0
 star_grid_space = 50
 temp_star_sprite = NodePath("background/star_control/Sprite2D")
 explosion = ExtResource("4_272bh")
+bullet_impact = ExtResource("5_5vw27")
 
 [node name="background" type="Control" parent="."]
+z_index = -100
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -197,6 +314,23 @@ texture = ExtResource("3_lquwl")
 hframes = 3
 vframes = 3
 
+[node name="main_menu_background" type="Control" parent="."]
+z_index = -50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="station" type="Sprite2D" parent="main_menu_background"]
+z_index = 5
+position = Vector2(86, 308)
+scale = Vector2(2, 2)
+texture = ExtResource("7_kek77")
+hframes = 3
+frame = 2
+
 [node name="game_control" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -210,6 +344,7 @@ process_mode = 3
 script = ExtResource("2_0xm2m")
 
 [node name="main_animator" type="AnimationPlayer" parent="."]
+process_mode = 3
 libraries = {
 &"": SubResource("AnimationLibrary_1bvp3")
 }
@@ -348,6 +483,16 @@ size_flags_vertical = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="fade" type="ColorRect" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)
 
 [connection signal="pressed" from="ui/Main_menu/HBoxContainer/VBoxContainer/start" to="main_animator" method="play" binds= [&"start_game"]]
 [connection signal="pressed" from="ui/Main_menu/HBoxContainer/VBoxContainer/quit" to="." method="quit_game"]

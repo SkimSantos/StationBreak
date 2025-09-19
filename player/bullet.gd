@@ -33,6 +33,9 @@ func on_body_entered(body: Node) -> void:
 	if body.get_parent() is Bullet:
 		if((body.get_parent() as Bullet).bullet_type == bullet_type):
 			return;
+		var bullet_impact : Node2D = Controller.main_scene.bullet_impact.instantiate();
+		Controller.level.add_child(bullet_impact);
+		bullet_impact.global_position = self.global_position;
 		body.get_parent().on_hit();
 		on_hit();
 
@@ -48,8 +51,8 @@ func on_hit() -> void:
 	if(delete_callable.is_valid()):
 		self.visible = false;
 		set_process(false);
-		area.monitoring = false;
-		area.monitorable = false;
+		area.set_deferred("monitoring", false);
+		area.set_deferred("monitorable", false);
 		initiate_bullet();
 		delete_callable.call(self);
 		return;

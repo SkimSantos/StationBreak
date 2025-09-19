@@ -19,6 +19,7 @@ var current_level : LevelBase = null;
 
 @export_subgroup("Effects")
 @export var explosion : PackedScene;
+@export var bullet_impact : PackedScene;
 
 var stars_array : Array[Array] = [];
 var back_distance_runned : float = 0.0;
@@ -179,3 +180,6 @@ func completed_level() -> void:
 		current_level_index = levels.size() - 1;
 	Controller.ui.ignore_input = true;
 	animator.play("next_level");
+
+func show_level() -> void:
+	animator.play("show_level");

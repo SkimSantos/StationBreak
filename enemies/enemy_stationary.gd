@@ -12,6 +12,8 @@ var fired_bullets : Array[Bullet] = [];
 var shoot_time : float = 0.0;
 
 func set_ready() -> void:
+	random.randomize();
+	shoot_time = random.randf_range(0.0, shoot_interval);
 	if(bullet_scene != null && bullet_array.size() == 0):
 		for i in range(0, number_bullet_pre_instance):
 			var bullet = bullet_scene.instantiate() as Bullet;

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ctor5ssuw0kcc" path="res://levels/level_base.gd" id="1_omks2"]
 [ext_resource type="PackedScene" uid="uid://b0kp6akyoc1ev" path="res://enemies/Drifter.tscn" id="2_wwd78"]
 [ext_resource type="PackedScene" uid="uid://cfjkcsoqydory" path="res://enemies/AgrisI42.tscn" id="3_foxie"]
-[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://time_label.gd" id="5_08q8e"]
+[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://other/time_label.gd" id="5_08q8e"]
 [ext_resource type="PackedScene" uid="uid://c1svl4usmmaia" path="res://player/player.tscn" id="6_ryq82"]
 
 [node name="Game" type="Control" node_paths=PackedStringArray("enemies_spawner")]
@@ -46,19 +46,6 @@ custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
-
-[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer/enemy_spawn"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -2.0
-offset_top = -2.0
-offset_right = -2.0
-offset_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0.156863)
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
