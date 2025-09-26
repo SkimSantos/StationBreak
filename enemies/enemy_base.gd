@@ -6,8 +6,8 @@ class_name EnemyBase
 var animation_timer : float = 0.0;
 
 var direction : Vector2 = Vector2.DOWN;
-@export_range(50, 200, 1) var speed_x : float = 150.0;
-@export_range(50, 200, 1) var speed_y : float = 100.0;
+@export_range(50, 500, 1) var speed_x : float = 150.0;
+@export_range(50, 500, 1) var speed_y : float = 100.0;
 @export var random_timer : float = 1.0;
 @export var change_ai_y : int = 200;
 @export var damage : int = 1;
@@ -81,7 +81,7 @@ func _process(delta: float) -> void:
 		direction = Vector2.RIGHT;
 		sprite.frame_coords.y = 2;
 	if(position.y > 700):
-		queue_free();
+		on_hp_zero();
 
 func randomize_direction() -> void:
 	random.randomize();

@@ -148,6 +148,10 @@ func to_main_menu() -> void:
 	if(animator):
 		animator.play("init");
 
+func init_end():
+	if(animator):
+		animator.play("idle");
+
 func set_level(index: int) -> void:
 	if(current_level != null):
 		current_level.queue_free();

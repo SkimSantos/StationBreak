@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqbapm365urkr"]
+[gd_scene load_steps=6 format=3 uid="uid://ggkanwqv8i4l"]
 
-[ext_resource type="Script" uid="uid://ctor5ssuw0kcc" path="res://levels/level_base.gd" id="1_kx6l7"]
-[ext_resource type="PackedScene" uid="uid://b0kp6akyoc1ev" path="res://enemies/Drifter.tscn" id="2_n46q3"]
-[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://other/time_label.gd" id="3_btoec"]
-[ext_resource type="PackedScene" uid="uid://b6gci22787o15" path="res://enemies/Shredder.tscn" id="3_n46q3"]
-[ext_resource type="PackedScene" uid="uid://c1svl4usmmaia" path="res://player/player.tscn" id="4_gwceb"]
+[ext_resource type="Script" uid="uid://ctor5ssuw0kcc" path="res://levels/level_base.gd" id="1_5722l"]
+[ext_resource type="PackedScene" uid="uid://ds2jw2lmfqs35" path="res://enemies/Trakil.tscn" id="2_5722l"]
+[ext_resource type="PackedScene" uid="uid://b6gci22787o15" path="res://enemies/Shredder.tscn" id="3_ep78u"]
+[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://other/time_label.gd" id="4_dfjjl"]
+[ext_resource type="PackedScene" uid="uid://c1svl4usmmaia" path="res://player/player.tscn" id="5_at1ld"]
 
 [node name="Game" type="Control" node_paths=PackedStringArray("enemies_spawner")]
 physics_interpolation_mode = 0
@@ -14,17 +14,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_kx6l7")
+script = ExtResource("1_5722l")
 enemies_spawner = NodePath("MarginContainer/VBoxContainer/enemy_spawn")
 enemies_spawner_distance = Vector2(50, 50)
-enemies_scenes = Array[PackedScene]([ExtResource("2_n46q3"), ExtResource("3_n46q3")])
-enemies_count = Array[int]([5, 1])
+enemies_scenes = Array[PackedScene]([ExtResource("2_5722l"), ExtResource("3_ep78u")])
+enemies_count = Array[int]([3, 4])
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-script = ExtResource("3_btoec")
+script = ExtResource("4_dfjjl")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -55,6 +55,6 @@ size_flags_vertical = 3
 [node name="player_area" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Player" parent="MarginContainer/VBoxContainer/player_area" node_paths=PackedStringArray("player_control_area") instance=ExtResource("4_gwceb")]
+[node name="Player" parent="MarginContainer/VBoxContainer/player_area" node_paths=PackedStringArray("player_control_area") instance=ExtResource("5_at1ld")]
 position = Vector2(172, -18)
 player_control_area = NodePath("..")
