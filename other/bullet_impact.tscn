@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bm3poiwtwrb2u"]
+[gd_scene load_steps=12 format=3 uid="uid://bm3poiwtwrb2u"]
 
 [ext_resource type="Texture2D" uid="uid://c2o5eucqb4545" path="res://assets/bullet_explosion.png" id="1_wav3m"]
 [ext_resource type="Script" uid="uid://dhjf18bmxlxja" path="res://other/explosion_base.gd" id="2_vrkvg"]
+[ext_resource type="AudioStream" uid="uid://qkpkfmkdhye8" path="res://assets/sounds/hit1.wav" id="3_vrkvg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ypt83"]
 atlas = ExtResource("1_wav3m")
@@ -69,3 +70,7 @@ sprite_frames = SubResource("SpriteFrames_kmg5g")
 animation = &"impact"
 autoplay = "impact"
 script = ExtResource("2_vrkvg")
+
+[node name="sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vrkvg")
+volume_db = -35.0

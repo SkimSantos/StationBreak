@@ -22,6 +22,9 @@ var firing : bool = false;
 var bullet_array : Array[Bullet] = [];
 var fired_bullets : Array[Bullet] = [];
 
+@export_subgroup("Sound")
+@export var shoot_sound : AudioStreamPlayer;
+
 func _enter_tree() -> void:
 	Controller.set_player(self);
 
@@ -98,6 +101,8 @@ func fire_bullet() -> void:
 		bullet.visible = true;
 		bullet.set_process(true);
 		bullet.fired();
+		if(shoot_sound != null):
+			shoot_sound.play();
 	else:
 		var bullet = bullet_scene.instantiate();
 		bullet.bullet_type = type;
@@ -106,6 +111,8 @@ func fire_bullet() -> void:
 		Controller.level.add_child(bullet);
 		bullet.set_direction(Vector2.UP);
 		bullet.fired();
+		if(shoot_sound != null):
+			shoot_sound.play();
 
 func on_hp_zero() -> void:
 	for bullet in bullet_array:

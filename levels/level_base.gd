@@ -110,6 +110,9 @@ func enemy_killed(enemy: EnemyBase) -> void:
 			explosion_instance.flip_v = random.randi_range(0, 1) == 1;
 			explosion_instance.global_position = enemy.global_position;
 			Controller.level.add_child(explosion_instance);
+			var sound_explosion : AudioStreamPlayer = explosion_instance.get_node_or_null("sound") as AudioStreamPlayer;
+			if(sound_explosion != null):
+				sound_explosion.play();
 	spawned_enemies.erase(enemy);
 	enemy.queue_free();
 	if(spawned_enemies.size() == 0):
