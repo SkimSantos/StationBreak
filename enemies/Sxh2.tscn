@@ -13,6 +13,7 @@ bullet_scene = ExtResource("2_rsxit")
 shoot_interval = 1.0
 number_bullet_pre_instance = 4
 nuzzle = NodePath("nuzzle")
+score_points = 3
 sprite = NodePath("Sprite2D")
 metadata/_custom_type_script = "uid://dwkeublhh8ma0"
 

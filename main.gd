@@ -28,10 +28,13 @@ var random = RandomNumberGenerator.new();
 var endless_on_last : bool = false;
 var endless_count : int = 0;
 
+var current_score : int = 0;
+
 func _ready() -> void:
 	Controller.set_main_scene(self);
 	endless_on_last = false;
 	endless_count = 0;
+	current_score = 0;
 	if(animator):
 		animator.play("init");
 	_create_stars();
@@ -149,6 +152,7 @@ func to_main_menu() -> void:
 		animator.play("init");
 
 func init_end():
+	current_score = 0;
 	if(animator):
 		animator.play("idle");
 
@@ -187,3 +191,8 @@ func completed_level() -> void:
 
 func show_level() -> void:
 	animator.play("show_level");
+
+func add_score(points: int) -> void:
+	current_score += points;
+	if(Controller.top_bar != null):
+		Controller.top_bar.set_score(current_score);

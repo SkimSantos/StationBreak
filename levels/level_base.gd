@@ -10,11 +10,13 @@ var enemies_offset : Vector2 = Vector2.ZERO;
 @export var enemies_count : Array[int];
 
 var spawned_enemies : Array[EnemyBase] = [];
+var total_enemies_spawned : int = 0;
 
 var random = RandomNumberGenerator.new();
 
 func _enter_tree() -> void:
 	Controller.set_level(self);
+	total_enemies_spawned = 0;
 
 func _ready() -> void:
 	set_process_active(false);
@@ -66,6 +68,10 @@ func spawn_enemies() -> void:
 			enemy.max_x_pos = enemies_spawner.size.x;
 			spawned_enemies.append(enemy);
 			enemy.set_ready();
+			total_enemies_spawned += 1;
+	
+	if(Controller.top_bar != null):
+		Controller.top_bar.set_enemies_count(spawned_enemies.size(), total_enemies_spawned);
 
 func get_random_position() -> Vector2:
 	random.randomize();
@@ -102,7 +108,7 @@ func get_random_position() -> Vector2:
 
 	return pos;
 
-func enemy_killed(enemy: EnemyBase) -> void:
+func enemy_killed(enemy: EnemyBase, ignore_points : bool = false) -> void:
 	if(Controller.main_scene != null && Controller.main_scene.explosion != null):
 		var explosion_instance : AnimatedSprite2D = Controller.main_scene.explosion.instantiate() as AnimatedSprite2D;
 		if(explosion_instance != null):
@@ -113,8 +119,15 @@ func enemy_killed(enemy: EnemyBase) -> void:
 			var sound_explosion : AudioStreamPlayer = explosion_instance.get_node_or_null("sound") as AudioStreamPlayer;
 			if(sound_explosion != null):
 				sound_explosion.play();
+	if(Controller.main_scene != null):
+		if(ignore_points):
+			Controller.main_scene.add_score(1);
+		else:
+			Controller.main_scene.add_score(enemy.score_points);
 	spawned_enemies.erase(enemy);
 	enemy.queue_free();
+	if(Controller.top_bar != null):
+		Controller.top_bar.set_enemies_count(spawned_enemies.size(), total_enemies_spawned);
 	if(spawned_enemies.size() == 0):
 		Controller.player.set_fire(false);
 		Controller.main_scene.completed_level();

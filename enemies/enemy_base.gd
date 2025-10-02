@@ -1,6 +1,8 @@
 extends Character
 class_name EnemyBase
 
+@export var score_points : int = 1;
+
 @export var sprite : Sprite2D;
 @export var animation_frame_rate : float = 0.2;
 var animation_timer : float = 0.0;
@@ -11,6 +13,7 @@ var direction : Vector2 = Vector2.DOWN;
 @export var random_timer : float = 1.0;
 @export var change_ai_y : int = 200;
 @export var damage : int = 1;
+
 
 var max_x_pos : int = 550;
 
@@ -80,8 +83,8 @@ func _process(delta: float) -> void:
 		position.x = 0;
 		direction = Vector2.RIGHT;
 		sprite.frame_coords.y = 2;
-	if(position.y > 700):
-		on_hp_zero();
+	if(position.y > DisplayServer.window_get_size().y + 50):
+		on_hp_zero(true);
 
 func randomize_direction() -> void:
 	random.randomize();
@@ -101,5 +104,5 @@ func on_area_entered(a: Node) -> void:
 		player.on_bullet_hit(damage);
 		Controller.level.enemy_killed(self);
 
-func on_hp_zero() -> void:
-	Controller.level.enemy_killed(self);;
+func on_hp_zero(ignore_points : bool = false) -> void:
+	Controller.level.enemy_killed(self, ignore_points);

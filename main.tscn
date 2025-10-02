@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bqsywljl35oly"]
+[gd_scene load_steps=48 format=3 uid="uid://bqsywljl35oly"]
 
 [ext_resource type="Script" uid="uid://bltvgumiyoril" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://cwykn0ie1yh3p" path="res://input_manager.gd" id="2_0xm2m"]
@@ -9,10 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://dj4yhjwnbso52" path="res://other/explosion_1.tscn" id="4_272bh"]
 [ext_resource type="PackedScene" uid="uid://ggkanwqv8i4l" path="res://levels/level_2.tscn" id="4_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bm3poiwtwrb2u" path="res://other/bullet_impact.tscn" id="5_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cdiv77rovhe8i" path="res://levels/level_3.tscn" id="5_w48qg"]
 [ext_resource type="Shader" uid="uid://ccn36o1xl2rxu" path="res://assets/background_space.gdshader" id="6_efxa6"]
 [ext_resource type="Script" uid="uid://s14y5mt3lsl" path="res://back_shader.gd" id="7_dg77c"]
 [ext_resource type="Texture2D" uid="uid://mqlsvrw75cy" path="res://assets/station_1.png" id="7_kek77"]
 [ext_resource type="Texture2D" uid="uid://ctwfyjy23dxe6" path="res://assets/spaceship_init_anim.png" id="8_4c57u"]
+[ext_resource type="FontFile" uid="uid://crxk5ld66gyna" path="res://assets/press_start_2p/PressStart2P.ttf" id="15_vivmo"]
+[ext_resource type="Script" uid="uid://bil35nkncqx2x" path="res://other/top_bar.gd" id="16_2cqfq"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0.459016, 0.688525, 0.942623)
@@ -38,7 +41,7 @@ shader_parameter/color_3 = Color(0.0588235, 0.164706, 0.247059, 1)
 shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_ycdy4")
 shader_parameter/noise_scale = 4.0
 shader_parameter/pixelate = Vector2(182, 324)
-shader_parameter/speed = 0.0
+shader_parameter/speed = 0.875247
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
 atlas = ExtResource("8_4c57u")
@@ -239,6 +242,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ui/top_bar:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_272bh"]
 resource_name = "game_over"
@@ -352,6 +367,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ui/top_bar:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_h2yge"]
 resource_name = "next_level"
@@ -433,6 +460,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ui/top_bar:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_1bvp3"]
@@ -522,7 +561,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h2yge")
-levels = Array[PackedScene]([ExtResource("2_7mycd"), ExtResource("3_272bh"), ExtResource("4_ycdy4")])
+levels = Array[PackedScene]([ExtResource("2_7mycd"), ExtResource("3_272bh"), ExtResource("4_ycdy4"), ExtResource("5_w48qg")])
 game_control = NodePath("game_control")
 animator = NodePath("main_animator")
 temp_label = NodePath("ui/final_label_temp")
@@ -625,7 +664,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 26
+theme_override_fonts/font = ExtResource("15_vivmo")
+theme_override_font_sizes/font_size = 18
 text = "Next Level in 5"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -664,10 +704,12 @@ size_flags_vertical = 3
 
 [node name="start" type="Button" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("15_vivmo")
 text = "Start"
 
 [node name="quit" type="Button" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("15_vivmo")
 text = "Quit"
 
 [node name="HSeparator" type="HSeparator" parent="ui/Main_menu/HBoxContainer/VBoxContainer"]
@@ -679,6 +721,43 @@ size_flags_vertical = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="top_bar" type="Control" parent="ui" node_paths=PackedStringArray("enemies_count", "score")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+script = ExtResource("16_2cqfq")
+enemies_count = NodePath("HBoxContainer/Label")
+score = NodePath("HBoxContainer/Label2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/top_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 11.0
+offset_right = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ui/top_bar/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("15_vivmo")
+text = "10/10"
+
+[node name="VSeparator" type="VSeparator" parent="ui/top_bar/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="ui/top_bar/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("15_vivmo")
+text = "100"
+horizontal_alignment = 2
 
 [node name="pause_menu" type="Control" parent="ui"]
 visible = false

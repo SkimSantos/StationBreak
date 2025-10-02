@@ -59,5 +59,5 @@ func _process(delta: float) -> void:
 		position.x = 0;
 		direction = Vector2.ZERO;
 		sprite.frame_coords.y = 2;
-	if(position.y > 700):
-		on_hp_zero();
+	if(position.y > DisplayServer.window_get_size().y + 50):
+		on_hp_zero(true);

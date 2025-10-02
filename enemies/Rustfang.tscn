@@ -65,6 +65,7 @@ shoot_interval = 0.7
 number_bullet_pre_instance = 4
 nuzzle = NodePath("nuzzle")
 animator = NodePath("animator")
+score_points = 5
 metadata/_custom_type_script = "uid://b0rchy2otdgnt"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ggkanwqv8i4l"]
+[gd_scene load_steps=5 format=3 uid="uid://ggkanwqv8i4l"]
 
 [ext_resource type="Script" uid="uid://ctor5ssuw0kcc" path="res://levels/level_base.gd" id="1_5722l"]
 [ext_resource type="PackedScene" uid="uid://ds2jw2lmfqs35" path="res://enemies/Trakil.tscn" id="2_5722l"]
 [ext_resource type="PackedScene" uid="uid://b6gci22787o15" path="res://enemies/Shredder.tscn" id="3_ep78u"]
-[ext_resource type="Script" uid="uid://db8saqomte6yh" path="res://other/time_label.gd" id="4_dfjjl"]
 [ext_resource type="PackedScene" uid="uid://c1svl4usmmaia" path="res://player/player.tscn" id="5_at1ld"]
 
 [node name="Game" type="Control" node_paths=PackedStringArray("enemies_spawner")]
@@ -19,12 +18,6 @@ enemies_spawner = NodePath("MarginContainer/VBoxContainer/enemy_spawn")
 enemies_spawner_distance = Vector2(50, 50)
 enemies_scenes = Array[PackedScene]([ExtResource("2_5722l"), ExtResource("3_ep78u")])
 enemies_count = Array[int]([3, 4])
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-script = ExtResource("4_dfjjl")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

@@ -73,7 +73,7 @@ func on_bullet_deleted(bullet: Bullet) -> void:
 		return;
 	bullet_array.append(bullet);
 
-func on_hp_zero() -> void:
+func on_hp_zero(ignore_points : bool = false) -> void:
 	for bullet in bullet_array:
 		bullet.queue_free();
 	Controller.level.enemy_killed(self);

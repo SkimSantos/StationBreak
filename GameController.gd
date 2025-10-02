@@ -4,6 +4,7 @@ var player: PlayerController = null;
 var main_scene : MainScene = null;
 var level: LevelBase = null;
 var ui: UIControl = null;
+var top_bar : TopBar = null;
 var camera: Node = null;
 var audio_manager: Node = null;
 var input_manager: InputManager = null;
@@ -24,6 +25,9 @@ func set_level(l: LevelBase) -> void:
 
 func set_ui(u: UIControl) -> void:
 	ui = u;
+
+func set_topbar(u: TopBar) -> void:
+	top_bar = u;
 
 func set_camera(c: Node) -> void:
 	camera = c;

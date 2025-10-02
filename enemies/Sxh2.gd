@@ -2,19 +2,27 @@ extends Rustfang
 class_name Sxh2
 
 var parent_control : Control = null;
+@export_range(0,1,0.1) var speed_variantion : float = 0.5;
 
 func set_ready() -> void:
 	super.set_ready();
 	parent_control = get_parent() as Control;
 	random.randomize();
+	var upDown = random.randi_range(0, 1);
 	if(random.randi_range(0, 1) == 0):
-		direction = Vector2.LEFT + Vector2.DOWN;
+		direction = Vector2.LEFT;
 		if(sprite != null):
 			sprite.frame_coords.y = 2;
 	else:
-		direction = Vector2.RIGHT + Vector2.DOWN;
+		direction = Vector2.RIGHT;
 		if(sprite != null):
 			sprite.frame_coords.y = 1;
+	if(upDown == 0):
+		direction += Vector2.UP;
+	else:
+		direction += Vector2.DOWN;
+	direction = direction.normalized();
+	speed_x = random.randf_range(speed_x - (speed_x * speed_variantion), speed_x + (speed_x * speed_variantion));
 
 func _process(delta: float) -> void:
 	super._process(delta);

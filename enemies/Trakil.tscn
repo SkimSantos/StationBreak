@@ -9,6 +9,7 @@ size = Vector2(27, 41)
 [node name="trakil" type="Node2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_jrtw0")
 timer_to_kamikaze = 0.5
+score_points = 5
 sprite = NodePath("Sprite2D")
 speed_x = 100.0
 speed_y = 500.0
