@@ -106,3 +106,5 @@ func on_area_entered(a: Node) -> void:
 
 func on_hp_zero(ignore_points : bool = false) -> void:
 	Controller.level.enemy_killed(self, ignore_points);
+	if(SoundController != null):
+		SoundController.play_sfx("explosion_1", true);

@@ -77,3 +77,5 @@ func on_hp_zero(ignore_points : bool = false) -> void:
 	for bullet in bullet_array:
 		bullet.queue_free();
 	Controller.level.enemy_killed(self);
+	if(SoundController != null):
+		SoundController.play_sfx("explosion_1", true);

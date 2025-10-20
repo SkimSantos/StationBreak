@@ -21,5 +21,7 @@ func on_hp_zero() -> void:
 		var explosion_instance = Controller.main_scene.explosion.instantiate();
 		if(explosion_instance != null):
 			explosion_instance.global_position = self.global_position;
+			if(SoundController != null):
+				SoundController.play_sfx("explosion_1", true);
 			Controller.level.add_child(explosion_instance);
 	queue_free();

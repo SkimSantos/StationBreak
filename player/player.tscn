@@ -1,12 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1svl4usmmaia"]
+[gd_scene load_steps=7 format=3 uid="uid://c1svl4usmmaia"]
 
 [ext_resource type="Script" uid="uid://dyessml8aq6ru" path="res://player/player_controller.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://b14g4bya8vr04" path="res://player/bullet.tscn" id="2_g1dw6"]
 [ext_resource type="Texture2D" uid="uid://du8i4fpd0j0v3" path="res://assets/spaceship_1.png" id="3_g1dw6"]
-[ext_resource type="AudioStream" uid="uid://blycnhvp1upqh" path="res://assets/sounds/laser.wav" id="4_yw30f"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g1dw6"]
-size = Vector2(34, 37)
 
 [sub_resource type="Animation" id="Animation_yw30f"]
 length = 0.001
@@ -21,13 +17,12 @@ _data = {
 &"idle": SubResource("Animation_g1dw6")
 }
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("player_sprite", "nuzzle", "shoot_sound")]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("player_sprite", "nuzzle")]
 script = ExtResource("1_oul6g")
 player_sprite = NodePath("Sprite2D")
 nuzzle = NodePath("nuzzle")
 bullet_scene = ExtResource("2_g1dw6")
 instantiate_bullets = 20
-shoot_sound = NodePath("shoot")
 type = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -42,15 +37,11 @@ position = Vector2(0, -24)
 [node name="Area2D" type="Area2D" parent="."]
 disable_mode = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D"]
 position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_g1dw6")
+polygon = PackedVector2Array(8, -27.5, 19, 5.5, 0, 24.5, -19, 5.5, -8, -27.5, -8, -10.5, 0, -16.5, 8, -10.5)
 
 [node name="animator" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_qjkh3")
 }
-
-[node name="shoot" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_yw30f")
-volume_db = -40.0

@@ -36,9 +36,8 @@ func on_body_entered(body: Node) -> void:
 		var bullet_impact : Node2D = Controller.main_scene.bullet_impact.instantiate();
 		Controller.level.add_child(bullet_impact);
 		bullet_impact.global_position = self.global_position;
-		var sound_impact : AudioStreamPlayer = bullet_impact.get_node_or_null("sound") as AudioStreamPlayer;
-		if(sound_impact != null):
-			sound_impact.play();
+		if(SoundController != null):
+			SoundController.play_sfx("bullet_explosion", true);
 		body.get_parent().on_hit();
 		on_hit();
 

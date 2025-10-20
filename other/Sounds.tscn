@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddmfrq1vlxddu"]
+
+[ext_resource type="Script" uid="uid://detejlmv21dpy" path="res://other/sound_controller.gd" id="1_r5rte"]
+[ext_resource type="AudioStream" uid="uid://qkpkfmkdhye8" path="res://assets/sounds/hit1.wav" id="2_mpjgb"]
+[ext_resource type="Script" uid="uid://50p7wiav25bw" path="res://other/audio_player.gd" id="3_j2lsq"]
+[ext_resource type="AudioStream" uid="uid://blycnhvp1upqh" path="res://assets/sounds/laser.wav" id="4_5ml0i"]
+[ext_resource type="AudioStream" uid="uid://ca2deehun1hlj" path="res://assets/sounds/explosion_1.wav" id="5_6m52q"]
+
+[node name="Sounds" type="Node" node_paths=PackedStringArray("music_control", "sfx_control")]
+script = ExtResource("1_r5rte")
+music_control = NodePath("Music")
+sfx_control = NodePath("SFX")
+
+[node name="Music" type="Node" parent="."]
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="bullet_explosion" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("2_mpjgb")
+volume_db = -35.0
+script = ExtResource("3_j2lsq")
+
+[node name="bullet_shoot" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_5ml0i")
+volume_db = -45.0
+script = ExtResource("3_j2lsq")
+metadata/_custom_type_script = "uid://50p7wiav25bw"
+
+[node name="explosion_1" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("5_6m52q")
+volume_db = -25.0
+script = ExtResource("3_j2lsq")
+metadata/_custom_type_script = "uid://50p7wiav25bw"

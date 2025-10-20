@@ -22,9 +22,6 @@ var firing : bool = false;
 var bullet_array : Array[Bullet] = [];
 var fired_bullets : Array[Bullet] = [];
 
-@export_subgroup("Sound")
-@export var shoot_sound : AudioStreamPlayer;
-
 func _enter_tree() -> void:
 	Controller.set_player(self);
 
@@ -101,8 +98,8 @@ func fire_bullet() -> void:
 		bullet.visible = true;
 		bullet.set_process(true);
 		bullet.fired();
-		if(shoot_sound != null):
-			shoot_sound.play();
+		if(SoundController != null):
+			SoundController.play_sfx("bullet_shoot", true);
 	else:
 		var bullet = bullet_scene.instantiate();
 		bullet.bullet_type = type;
@@ -111,8 +108,8 @@ func fire_bullet() -> void:
 		Controller.level.add_child(bullet);
 		bullet.set_direction(Vector2.UP);
 		bullet.fired();
-		if(shoot_sound != null):
-			shoot_sound.play();
+		if(SoundController != null):
+			SoundController.play_sfx("bullet_shoot", true);
 
 func on_hp_zero() -> void:
 	for bullet in bullet_array:
@@ -122,6 +119,8 @@ func on_hp_zero() -> void:
 	Controller.input_manager.input_level_active = false;
 	Controller.main_scene.on_player_dead();
 	Controller.main_scene.set_label_text("You Died!");
+	if(SoundController != null):
+		SoundController.play_sfx("explosion_1", true);
 	if(Controller.main_scene != null && Controller.main_scene.explosion != null):
 		var explosion_instance = Controller.main_scene.explosion.instantiate();
 		if(explosion_instance != null):
