@@ -48,15 +48,16 @@ void fragment() {
 				COLOR = color_1;
 			}
 		} else {
-			if((uv_pixel.x % 3) == 0) {
-				if((uv_pixel.y % 3) == 0) {
-					COLOR = color_2;
-				} else {
-					COLOR = color_1;
-				}
-			} else {
-				COLOR = color_1;
-			}
+			//if((uv_pixel.x % 3) == 0) {
+				//if((uv_pixel.y % 3) == 0) {
+					//COLOR = color_2;
+				//} else {
+					//COLOR = color_1;
+				//}
+			//} else {
+				//COLOR = color_1;
+			//}
+			COLOR = color_1;
 		}
 	} else if(noise_color.r <= blend_base * 10.0) {
 		if((uv_pixel.x % 2) == 0) {
